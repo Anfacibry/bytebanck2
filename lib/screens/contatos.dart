@@ -1,23 +1,26 @@
+import 'package:bytebank/screens/adicionando_contato.dart';
 import "package:flutter/material.dart";
 
 import '../components/contato_pessoa.dart';
 
-class TelaContatos extends StatelessWidget {
-  TelaContatos({Key? key}) : super(key: key);
+class TelaContatos extends StatefulWidget {
+  const TelaContatos({Key? key}) : super(key: key);
 
+  @override
+  State<TelaContatos> createState() => _TelaContatosState();
+}
+
+class _TelaContatosState extends State<TelaContatos> {
   final List<ContatoPessoa> contatos = [
     ContatoPessoa(
-      imagePerfil: "assets/image/gloria.jpg",
       nomePessoa: "Glória Cortez",
       numeroPessoa: "(99) 98436-9545",
     ),
     ContatoPessoa(
-      imagePerfil: "assets/image/andreynna.jpg",
       nomePessoa: "Andreynna Braga",
       numeroPessoa: "(99) 98531-2650",
     ),
     ContatoPessoa(
-      imagePerfil: "assets/image/dhef.jpg",
       nomePessoa: "Dheferson",
       numeroPessoa: "(99) 98400-9769",
     ),
@@ -35,10 +38,6 @@ class TelaContatos extends StatelessWidget {
         itemBuilder: (context, indice) => Card(
           elevation: 3.0,
           child: ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              foregroundImage: AssetImage(contatos[indice].imagePerfil),
-            ),
             title: Text(
               contatos[indice].nomePessoa,
               style: const TextStyle(
@@ -57,7 +56,18 @@ class TelaContatos extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10.0,
-        onPressed: () {},
+        onPressed: () {
+          final Future<ContatoPessoa?> contato = Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AdicionandoContato(),
+            ),
+          );
+          contato.then((contatPego) {
+            setState(() {
+              contatos.add(contatPego!);
+            });
+          });
+        },
         child: const Icon(Icons.add),
       ),
     );
