@@ -1,10 +1,13 @@
 class ContatoPessoa {
-  String imagePerfil;
-  String nomePessoa;
-  String numeroPessoa;
+  final String nomePessoa;
+  final String numeroPessoa;
   ContatoPessoa({
-    required this.imagePerfil,
     required this.nomePessoa,
     required this.numeroPessoa,
   });
+
+  @override
+  String toString() {
+    return "Contato: $nomePessoa Número: $numeroPessoa";
+  }
 }
