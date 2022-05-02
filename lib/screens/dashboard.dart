@@ -31,41 +31,37 @@ class TelaDashboard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (contex) => TelaContatos()),
-                );
-              },
-              autofocus: true,
-              focusNode: FocusNode(
-                descendantsAreFocusable: true,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                height: 70,
-                width: 100,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.people,
-                      color: Colors.white,
-                      size: 32.0,
-                    ),
-                    Text(
-                      "Contatos",
-                      style: TextStyle(
+            Material(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(20),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (contex) => const TelaContatos()),
+                  );
+                },
+                child: SizedBox(
+                  height: 70,
+                  width: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.people,
                         color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.0,
+                        size: 32.0,
                       ),
-                    ),
-                  ],
+                      Text(
+                        "Contatos",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
