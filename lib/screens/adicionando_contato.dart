@@ -1,4 +1,5 @@
 import 'package:bytebank/components/contato_pessoa.dart';
+
 import 'package:flutter/material.dart';
 
 class AdicionandoContato extends StatefulWidget {
@@ -11,6 +12,8 @@ class AdicionandoContato extends StatefulWidget {
 class _AdicionandoContatoState extends State<AdicionandoContato> {
   final TextEditingController _nomeContato = TextEditingController();
   final TextEditingController _numeroContato = TextEditingController();
+  String? _erroTextNomeContato;
+  String? _erroTextNumeroContato;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,28 +28,30 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
             children: [
               TextField(
                 controller: _nomeContato,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Nome e sobrenome",
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                   ),
                   hintText: "Bya de Sousa",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: _erroTextNomeContato,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: TextField(
                   controller: _numeroContato,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Número com DDD",
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                     ),
                     hintText: "(99) 99999-9999",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
+                    errorText: _erroTextNumeroContato,
                   ),
                 ),
               ),
@@ -56,6 +61,17 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
                   onPressed: () {
                     final String _nome = _nomeContato.text;
                     final String _numero = _numeroContato.text;
+                    if (_nome.isEmpty) {
+                      setState(() {
+                        _erroTextNomeContato = "Digite um nome e sobrenome";
+                      });
+                      return;
+                    } else if (_numero.isEmpty) {
+                      setState(() {
+                        _erroTextNumeroContato = "Digite número para contato";
+                      });
+                      return;
+                    }
                     final ContatoPessoa contatoPessoa = ContatoPessoa(
                       nomePessoa: _nome,
                       numeroPessoa: _numero,
