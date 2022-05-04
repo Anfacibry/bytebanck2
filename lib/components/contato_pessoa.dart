@@ -1,13 +1,10 @@
 class ContatoPessoa {
+  final int? id;
   final String nomePessoa;
   final String numeroPessoa;
   ContatoPessoa({
+    this.id,
     required this.nomePessoa,
     required this.numeroPessoa,
   });
-
-  @override
-  String toString() {
-    return "Contato: $nomePessoa Número: $numeroPessoa";
-  }
 }
