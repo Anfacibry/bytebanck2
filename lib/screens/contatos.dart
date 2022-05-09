@@ -79,11 +79,16 @@ class _TelaContatosState extends State<TelaContatos> {
       floatingActionButton: FloatingActionButton(
         elevation: 10.0,
         onPressed: () {
-          Navigator.of(context).push(
+          Future<ContatoPessoa?> contatos = Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const AdicionandoContato(),
             ),
           );
+          contatos.then((contatoPego) {
+            setState(() {
+              salvandoContato(contatoPego!);
+            });
+          });
         },
         child: const Icon(Icons.add),
       ),
