@@ -1,4 +1,5 @@
 import 'package:bytebank/components/contato_pessoa.dart';
+import 'package:bytebank/database/app_database.dart';
 
 import 'package:flutter/material.dart';
 
@@ -76,7 +77,10 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
                       nomePessoa: _nome,
                       numeroPessoa: _numero,
                     );
-                    Navigator.pop(context, contatoPessoa);
+
+                    salvandoContato(contatoPessoa);
+
+                    Navigator.pop(context);
                   },
                   child: const Text("Salvar"),
                 ),
