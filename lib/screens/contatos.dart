@@ -3,7 +3,6 @@ import 'package:bytebank/screens/adicionando_contato.dart';
 import "package:flutter/material.dart";
 
 import '../components/contato_pessoa.dart';
-import '../database/contatos.dart';
 
 class TelaContatos extends StatefulWidget {
   const TelaContatos({Key? key}) : super(key: key);
@@ -23,62 +22,68 @@ class _TelaContatosState extends State<TelaContatos> {
       body: FutureBuilder<List<ContatoPessoa>>(
         future: buscandoContatos(),
         builder: (context, snapshot) {
-          final List<ContatoPessoa> contatos;
           if (snapshot.hasData) {
-            contatos = snapshot.data!;
+            final List<ContatoPessoa> listaContatos = snapshot.data!;
+            if (listaContatos.isNotEmpty) {
+              return ListView.builder(
+                itemCount: listaContatos.length,
+                itemBuilder: (context, indice) => Card(
+                  elevation: 3.0,
+                  child: ListTile(
+                    title: Text(
+                      listaContatos[indice].nomePessoa,
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    subtitle: Text(
+                      listaContatos[indice].numeroPessoa,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          removendoContato(listaContatos[indice]);
+                        });
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return const Center(
+                child: Text("Lista de contatos vazia"),
+              );
+            }
           } else {
-            contatos = [];
-          }
-
-          return ListView.builder(
-            itemCount: contatos.length,
-            itemBuilder: (context, indice) => Card(
-              elevation: 3.0,
-              child: ListTile(
-                title: Text(
-                  contatos[indice].nomePessoa,
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                subtitle: Text(
-                  contatos[indice].numeroPessoa,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                trailing: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      removendoContato(contatos[indice]);
-                    });
-                  },
-                  icon: Icon(
-                    Icons.delete,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(),
+                  Text("Carregando contatos"),
+                ],
               ),
-            ),
-          );
+            );
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10.0,
         onPressed: () {
-          final Future<ContatoPessoa?> contato = Navigator.of(context).push(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const AdicionandoContato(),
             ),
           );
-          contato.then((contatPego) {
-            setState(() {
-              salvandoContato(contatPego!).then((indice) {
-                contatos[indice];
-              });
-            });
-          });
         },
         child: const Icon(Icons.add),
       ),
