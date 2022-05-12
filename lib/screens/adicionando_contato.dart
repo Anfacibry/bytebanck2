@@ -1,4 +1,4 @@
-import 'package:bytebank/components/contato_pessoa.dart';
+import 'package:bytebank/components/conta_pessoa.dart';
 
 import 'package:flutter/material.dart';
 
@@ -72,9 +72,9 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
                       });
                       return;
                     }
-                    final ContatoPessoa contatoPessoa = ContatoPessoa(
-                      nomePessoa: _nome,
-                      numeroPessoa: _numero,
+                    final ContaPessoa contatoPessoa = ContaPessoa(
+                      nomeConta: _nome,
+                      numeroConta: _numero,
                     );
                     Navigator.pop(context, contatoPessoa);
                   },

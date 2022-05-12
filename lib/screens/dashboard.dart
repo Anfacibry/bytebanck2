@@ -1,5 +1,8 @@
 import 'package:bytebank/screens/contatos.dart';
+import 'package:bytebank/screens/lista_transacao.dart';
 import 'package:flutter/material.dart';
+
+import '../models/botoes.dart';
 
 class TelaDashboard extends StatelessWidget {
   final String titulo;
@@ -31,39 +34,31 @@ class TelaDashboard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            Material(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(20),
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (contex) => const TelaContatos()),
-                  );
-                },
-                child: SizedBox(
-                  height: 70,
-                  width: 100,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.people,
-                        color: Colors.white,
-                        size: 32.0,
+            Row(
+              children: [
+                BotoesContainer(
+                  icone: Icons.people,
+                  titulo: "Contatos",
+                  botao: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (contex) => const TelaContatos(),
                       ),
-                      Text(
-                        "Contatos",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              ),
+                BotoesContainer(
+                  icone: Icons.monetization_on,
+                  titulo: "Transferência",
+                  botao: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ListaTransacao(),
+                      ),
+                    );
+                  },
+                )
+              ],
             ),
           ],
         ),

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class BotoesContainer extends StatelessWidget {
   final IconData icone;
   final String titulo;
-  final Widget tela;
+  final void Function() botao;
   const BotoesContainer({
     required this.icone,
     required this.titulo,
-    required this.tela,
+    required this.botao,
     Key? key,
   }) : super(key: key);
 
@@ -19,11 +19,7 @@ class BotoesContainer extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (contex) => tela),
-            );
-          },
+          onTap: botao,
           child: SizedBox(
             height: 70,
             width: 110,

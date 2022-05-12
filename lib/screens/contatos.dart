@@ -2,7 +2,7 @@ import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/screens/adicionando_contato.dart';
 import "package:flutter/material.dart";
 
-import '../components/contato_pessoa.dart';
+import '../components/conta_pessoa.dart';
 
 class TelaContatos extends StatefulWidget {
   const TelaContatos({Key? key}) : super(key: key);
@@ -19,11 +19,11 @@ class _TelaContatosState extends State<TelaContatos> {
         title: const Text("Contatos"),
         centerTitle: true,
       ),
-      body: FutureBuilder<List<ContatoPessoa>>(
+      body: FutureBuilder<List<ContaPessoa>>(
         future: buscandoContatos(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<ContatoPessoa> listaContatos = snapshot.data!;
+            final List<ContaPessoa> listaContatos = snapshot.data!;
             if (listaContatos.isNotEmpty) {
               return ListView.builder(
                 itemCount: listaContatos.length,
@@ -31,14 +31,14 @@ class _TelaContatosState extends State<TelaContatos> {
                   elevation: 3.0,
                   child: ListTile(
                     title: Text(
-                      listaContatos[indice].nomePessoa,
+                      listaContatos[indice].nomeConta,
                       style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     subtitle: Text(
-                      listaContatos[indice].numeroPessoa,
+                      listaContatos[indice].numeroConta,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
@@ -79,7 +79,7 @@ class _TelaContatosState extends State<TelaContatos> {
       floatingActionButton: FloatingActionButton(
         elevation: 10.0,
         onPressed: () {
-          Future<ContatoPessoa?> contatos = Navigator.of(context).push(
+          Future<ContaPessoa?> contatos = Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const AdicionandoContato(),
             ),
