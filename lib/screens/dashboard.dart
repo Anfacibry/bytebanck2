@@ -53,7 +53,7 @@ class TelaDashboard extends StatelessWidget {
                   botao: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ListaTransacao(),
+                        builder: (context) => const ListaTransacao(),
                       ),
                     );
                   },
