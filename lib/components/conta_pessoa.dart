@@ -1,5 +1,5 @@
 class ContaPessoa {
-  final int? id;
+  final String? id;
   final String nomeConta;
   final String numeroConta;
   ContaPessoa({
@@ -7,4 +7,9 @@ class ContaPessoa {
     required this.nomeConta,
     required this.numeroConta,
   });
+
+  @override
+  String toString() {
+    return "Contato Pessoa: Id: $id, Nome: $nomeConta, Numero: $numeroConta";
+  }
 }
