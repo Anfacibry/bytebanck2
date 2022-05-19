@@ -19,53 +19,67 @@ class _ListaTransacaoState extends State<ListaTransacao> {
         centerTitle: true,
       ),
       body: FutureBuilder<List<Transacao>?>(
-          future: Future.delayed(const Duration(seconds: 3))
-              .then((value) => findAll()),
+          future: findAll(),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final List<Transacao> transacao = snapshot.data!;
-              if (transacao.isNotEmpty) {
-                return ListView.builder(
-                  itemCount: transacao.length,
-                  itemBuilder: (context, index) {
-                    final Transacao transaction = transacao[index];
-                    return Card(
-                      child: ListTile(
-                        leading: const Icon(Icons.monetization_on),
-                        title: Text(
-                          transaction.valor.toString(),
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
+            switch (snapshot.connectionState) {
+              //Estado sem conexão
+              case ConnectionState.none:
+
+              //Estado de conexão em espera
+              case ConnectionState.waiting:
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(),
+                      Text("Carregando Transferencias"),
+                    ],
+                  ),
+                );
+
+              //Estado de Conexão ativa
+              case ConnectionState.active:
+                break;
+              //Estado de conexão feita
+              case ConnectionState.done:
+                if (snapshot.hasData) {
+                  final List<Transacao> transacao = snapshot.data!;
+                  if (transacao.isNotEmpty) {
+                    return ListView.builder(
+                      itemCount: transacao.length,
+                      itemBuilder: (context, index) {
+                        final Transacao transaction = transacao[index];
+                        return Card(
+                          child: ListTile(
+                            leading: const Icon(Icons.monetization_on),
+                            title: Text(
+                              transaction.valor.toString(),
+                              style: const TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              transaction.contato!.nomeConta.toString(),
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          transaction.contato!.nomeConta.toString(),
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     );
-                  },
-                );
-              } else {
-                return const Center(
-                  child: Text("Lista de transferencias vazia"),
-                );
-              }
-            } else {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(),
-                    Text("Carregando Transferencias"),
-                  ],
-                ),
-              );
+                  } else {
+                    return const Center(
+                      child: Text("Lista de transferencias vazia"),
+                    );
+                  }
+                }
             }
+            return const Center(
+              child: Text("Erro ao carregar"),
+            );
           }),
     );
   }
