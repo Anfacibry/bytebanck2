@@ -66,6 +66,15 @@ class _ListaTransacaoState extends State<ListaTransacao> {
                                 fontSize: 16.0,
                               ),
                             ),
+                            trailing: IconButton(
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
                           ),
                         );
                       },

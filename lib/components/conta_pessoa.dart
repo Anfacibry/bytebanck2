@@ -1,5 +1,5 @@
 class ContaPessoa {
-  final String? id;
+  final int? id;
   final String nomeConta;
   final String numeroConta;
   ContaPessoa({

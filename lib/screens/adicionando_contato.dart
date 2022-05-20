@@ -14,6 +14,7 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
   final TextEditingController _numeroContato = TextEditingController();
   String? _erroTextNomeContato;
   String? _erroTextNumeroContato;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +45,12 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
                 child: TextField(
                   controller: _numeroContato,
                   decoration: InputDecoration(
-                    labelText: "Número com DDD",
+                    labelText: "Número da conta",
                     labelStyle: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                     ),
-                    hintText: "(99) 99999-9999",
+                    hintText: "2000",
                     border: const OutlineInputBorder(),
                     errorText: _erroTextNumeroContato,
                   ),
@@ -76,6 +77,7 @@ class _AdicionandoContatoState extends State<AdicionandoContato> {
                       nomeConta: _nome,
                       numeroConta: _numero,
                     );
+                    debugPrint(contatoPessoa.toString());
                     Navigator.pop(context, contatoPessoa);
                   },
                   child: const Text("Salvar"),

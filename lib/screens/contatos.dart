@@ -1,5 +1,6 @@
 import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/screens/adicionando_contato.dart';
+import 'package:bytebank/screens/transaction_form.dart';
 import "package:flutter/material.dart";
 
 import '../components/conta_pessoa.dart';
@@ -16,29 +17,38 @@ class _TelaContatosState extends State<TelaContatos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contatos"),
+        title: const Text("Contas"),
         centerTitle: true,
       ),
       body: FutureBuilder<List<ContaPessoa>>(
-        future: buscandoContatos(),
+        future: buscandoContas(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<ContaPessoa> listaContatos = snapshot.data!;
-            if (listaContatos.isNotEmpty) {
+            final List<ContaPessoa> listaContas = snapshot.data!;
+            if (listaContas.isNotEmpty) {
               return ListView.builder(
-                itemCount: listaContatos.length,
+                itemCount: listaContas.length,
                 itemBuilder: (context, indice) => Card(
                   elevation: 3.0,
                   child: ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransactionForm(
+                            contact: listaContas[indice],
+                          ),
+                        ),
+                      );
+                    },
                     title: Text(
-                      listaContatos[indice].nomeConta,
+                      listaContas[indice].nomeConta,
                       style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     subtitle: Text(
-                      listaContatos[indice].numeroConta,
+                      listaContas[indice].numeroConta,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
@@ -46,7 +56,7 @@ class _TelaContatosState extends State<TelaContatos> {
                     trailing: IconButton(
                       onPressed: () {
                         setState(() {
-                          removendoContato(listaContatos[indice]);
+                          removendoContato(listaContas[indice]);
                         });
                       },
                       icon: Icon(
@@ -69,7 +79,7 @@ class _TelaContatosState extends State<TelaContatos> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
                   CircularProgressIndicator(),
-                  Text("Carregando contatos"),
+                  Text("Carregando contas"),
                 ],
               ),
             );
@@ -87,6 +97,7 @@ class _TelaContatosState extends State<TelaContatos> {
           contatos.then((contatoPego) {
             setState(() {
               salvandoContato(contatoPego!);
+              debugPrint(contatoPego.toString());
             });
           });
         },
