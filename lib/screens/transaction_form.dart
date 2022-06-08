@@ -1,6 +1,9 @@
+import 'package:bytebank/components/alerta_dialogo.dart';
 import 'package:bytebank/components/conta_pessoa.dart';
 import 'package:bytebank/components/transacao.dart';
+
 import 'package:bytebank/http/web_cliente.dart';
+
 import 'package:flutter/material.dart';
 
 class TransactionForm extends StatefulWidget {
@@ -66,8 +69,21 @@ class _TransactionFormState extends State<TransactionForm> {
                       final double valor = double.parse(_valueController.text);
                       final Transacao transactionCreated =
                           Transacao(valor: valor, contato: widget.contact);
-                      salvandoTranferencia(transactionCreated);
-                      Navigator.of(context).pop();
+
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertaDialogo(
+                              senha: (String senhaPego) {
+                                salvandoTranferencia(
+                                  transacao: transactionCreated,
+                                  senha: senhaPego,
+                                );
+                                _valueController.clear();
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
                     },
                   ),
                 ),
